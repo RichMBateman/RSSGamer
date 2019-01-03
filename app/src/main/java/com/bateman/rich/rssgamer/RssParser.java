@@ -47,17 +47,32 @@ public class RssParser {
                         if(tagMainItem.equalsIgnoreCase(tagName)) {
                             inEntry = true;
                             currentRecord = new RssEntry();
-                        } else if(tagLink.equalsIgnoreCase(tagName)) {
+                        } else if(tagLink.equalsIgnoreCase(tagName) && rssSource.isLinkIsInAttribute()) {
                             if(inEntry) {
                                 // Parameters: Namespace, Name
                                 String url = xpp.getAttributeValue(null, "href");
                                 Log.d(TAG, "parse: Found link for entry: " + url);
                                 currentRecord.setLink(url);
                             }
+                        } else if("img".equalsIgnoreCase(tagName)) {
+                            // Parameters: Namespace, Name
+                            String imgSrc = xpp.getAttributeValue(null, "src");
+                            Log.d(TAG, "parse: Found img src for entry: " + imgSrc);
+                            currentRecord.setImgSrc(imgSrc);
+                        } else if("media:content".equalsIgnoreCase(tagName)) {
+                            if(currentRecord.getImgSrc() == null) {
+                                // Parameters: Namespace, Name
+                                String imgSrc = xpp.getAttributeValue(null, "url");
+                                Log.d(TAG, "parse: Found media:content url for entry: " + imgSrc);
+                                currentRecord.setImgSrc(imgSrc);
+                            }
                         }
                         break;
                     case XmlPullParser.TEXT:
                         textValue = xpp.getText();
+                        textValue = textValue.replace("<![CDATA[", "");
+                        textValue = textValue.replace("]]>", "");
+                        textValue = textValue.trim();
                         break;
                     case XmlPullParser.END_TAG:
                         Log.d(TAG, "parse: ending tag for " + tagName);
@@ -69,30 +84,50 @@ public class RssParser {
                         } else if (inEntry) {
                             // Since the course, it seems like the xml tags are now like "<im:name>",
                             // "im:image", etc.
-                            if(tagTitle.equalsIgnoreCase(tagName)) {
+                            if (tagTitle.equalsIgnoreCase(tagName)) {
                                 Log.d(TAG, "parse: End Tag for Name " + textValue);
                                 currentRecord.setTitle(textValue);
-                            } else if(tagDate.equalsIgnoreCase(tagName)) {
+                            } else if (tagDate.equalsIgnoreCase(tagName)) {
                                 Log.d(TAG, "parse: End Tag for Date " + textValue);
                                 textValue = textValue.replace("Z", "+00:00");
                                 textValue = textValue.substring(0, 22) + textValue.substring(23);
                                 Log.d(TAG, "parse: parsing text date time of: " + textValue);
                                 Date result = m_dateFormatter.parse(textValue);
                                 currentRecord.setDate(result);
-//                            } else if(tagLink.equalsIgnoreCase(tagName)) {
-//                                Log.d(TAG, "parse: End Tag for Link " + textValue);
-//                            }
+                            } else if (tagLink.equalsIgnoreCase(tagName) && !rssSource.isLinkIsInAttribute()) {
+                                Log.d(TAG, "parse: End Tag for Link " + textValue);
+                                currentRecord.setLink(textValue);
                             } else {
-                                if(textValue.contains("img src")) {
-                                    final String imgSrcValue = "img src=\"";
+                                if (textValue.contains("img src")) {
+                                    Log.d(TAG, "parse: embedded img src found in: " + textValue);
+                                    final String imgSrcValue = "img src=";
                                     int indexOfImgSrcStart = textValue.indexOf(imgSrcValue) + imgSrcValue.length();
-                                    int indexOfImgSrcEnd = textValue.indexOf("\"", indexOfImgSrcStart);
-                                    String imageSource = textValue.substring(indexOfImgSrcStart, indexOfImgSrcEnd);
+                                    char quoteCharacter = textValue.charAt(indexOfImgSrcStart);
+                                    Log.d(TAG, "parse: quote character for img is: " + quoteCharacter);
+                                    int indexOfImgSrcEnd = textValue.indexOf(quoteCharacter, indexOfImgSrcStart + 1);
+                                    String imageSource = textValue.substring(indexOfImgSrcStart + 1, indexOfImgSrcEnd);
+                                    if (imageSource.startsWith("//")) {
+                                        imageSource = "http:" + imageSource;
+                                    }
+                                    Log.d(TAG, "parse: image url found: " + imageSource);
+                                    currentRecord.setImgSrc(imageSource);
+                                } else if (textValue.contains("img")) {
+                                    // could be like img alt='....' src='...'
+                                    Log.d(TAG, "parse: embedded img src found in: " + textValue);
+                                    final String imgSrcValue = "src=";
+                                    int indexOfImgSrcStart = textValue.indexOf(imgSrcValue) + imgSrcValue.length();
+                                    char quoteCharacter = textValue.charAt(indexOfImgSrcStart);
+                                    Log.d(TAG, "parse: quote character for img is: " + quoteCharacter);
+                                    int indexOfImgSrcEnd = textValue.indexOf(quoteCharacter, indexOfImgSrcStart + 1);
+                                    String imageSource = textValue.substring(indexOfImgSrcStart + 1, indexOfImgSrcEnd);
+                                    if (imageSource.startsWith("//")) {
+                                        imageSource = "http:" + imageSource;
+                                    }
                                     Log.d(TAG, "parse: image url found: " + imageSource);
                                     currentRecord.setImgSrc(imageSource);
                                 }
                             }
-                            }
+                        }
                         break;
                     default:
                         // nothing to do.

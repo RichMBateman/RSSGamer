@@ -8,19 +8,20 @@ public class RssSource {
     private final String m_url;
     private final String m_xmlTagMainItem;
     private final String m_xmlTagTitle;
+    private final boolean m_linkIsInAttribute;
     private final String m_xmlTagLink;
     private final String m_xmlTagDate;
-
 
     private String m_rssFeedXml;
 
     public RssSource(String userFriendlyKey, String url, String xmlTagMainItem,
-                     String xmlTagTitle, String xmlTagLink, String xmlTagDate) {
+                     String xmlTagTitle, String xmlTagLink, boolean linkIsInAttribute, String xmlTagDate) {
         m_friendlyKey = userFriendlyKey;
         m_url = url;
         m_xmlTagMainItem = xmlTagMainItem;
         m_xmlTagTitle = xmlTagTitle;
         m_xmlTagLink = xmlTagLink;
+        m_linkIsInAttribute = linkIsInAttribute;
         m_xmlTagDate = xmlTagDate;
     }
 
@@ -54,5 +55,9 @@ public class RssSource {
 
     public String getXmlTagDate() {
         return m_xmlTagDate;
+    }
+
+    public boolean isLinkIsInAttribute() {
+        return m_linkIsInAttribute;
     }
 }

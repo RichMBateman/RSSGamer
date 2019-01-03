@@ -67,27 +67,29 @@ public class RssArticleRecyclerViewAdapter extends RecyclerView.Adapter<RssArtic
         // It seems like the http links are getting redirected to https.
         // If you paste the original link into the browser, this is what happens.
         // So for now, just using https instead of http, if http is there.
-        String imgSrc = entry.getImgSrc().replace("http:", "https:");
-        Log.d(TAG, "onBindViewHolder: imgSrc: " + imgSrc);
+        String imgSrc = entry.getImgSrc();
+        if(imgSrc != null && imgSrc.length() > 0) {
+            imgSrc = imgSrc.replace("http:", "https:");
+            Log.d(TAG, "onBindViewHolder: imgSrc: " + imgSrc);
 
-        // This is a way to do error handling.  If you just use "Picasso.with", you're missing out.
-        Picasso.Builder builder = new Picasso.Builder(m_context);
-        builder.listener(new Picasso.Listener() {
-            @Override
-            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                Log.d(TAG, "onImageLoadFailed: An image failed to load: " + uri.getPath());
-                exception.printStackTrace();
-            }
-        });
-        builder.build().setLoggingEnabled(true);
-        builder.build()
-                .load(imgSrc)
-                .fit().centerCrop()
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
-                .into(viewHolder.m_imageView);
+            // This is a way to do error handling.  If you just use "Picasso.with", you're missing out.
+            Picasso.Builder builder = new Picasso.Builder(m_context);
+            builder.listener(new Picasso.Listener() {
+                @Override
+                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                    Log.d(TAG, "onImageLoadFailed: An image failed to load: " + uri.getPath());
+                    exception.printStackTrace();
+                }
+            });
+            builder.build().setLoggingEnabled(true);
+            builder.build()
+                    .load(imgSrc)
+                    .fit().centerCrop()
+                    .error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder)
+                    .into(viewHolder.m_imageView);
 
-        // An alternative way to use Picasso, although in this example you lose the advantage of printing a stack trace on failure.
+            // An alternative way to use Picasso, although in this example you lose the advantage of printing a stack trace on failure.
 //        Picasso.with(m_context).setLoggingEnabled(true);
 //        Picasso.with(m_context)
 //                .load(imgSrc)
@@ -95,6 +97,7 @@ public class RssArticleRecyclerViewAdapter extends RecyclerView.Adapter<RssArtic
 //                .error(R.drawable.placeholder)
 //                .placeholder(R.drawable.placeholder)
 //                .into(viewHolder.m_imageView);
+        }
     }
 
     @Override

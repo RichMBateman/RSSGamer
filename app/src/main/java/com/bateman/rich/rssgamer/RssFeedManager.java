@@ -22,37 +22,37 @@ public class RssFeedManager {
     public static final String KEY_ROCKPAPERSHOTGUN = "Rock, Paper, Shotgun";
 
     private static final String RSS_FEED_URL_DESTRUCTOID = "http://feeds.feedburner.com/Destructoid";
-    private static final String RSS_FEED_URL_GAMASUTRA = "http://feeds.feedburner.com/GamasutraNews";
-    private static final String RSS_FEED_URL_KOTAKU = "https://kotaku.com/tag/kotakucore/rss";
-    private static final String RSS_FEED_URL_METRO_CO_UK = "https://metro.co.uk/entertainment/gaming/feed/";
     private static final String RSS_FEED_URL_ESCAPIST = "http://rss.escapistmagazine.com/news/0.xml";
-    private static final String RSS_FEED_URL_VIDEOGAMER = "https://www.videogamer.com/rss/allupdates.xml";
-    private static final String RSS_FEED_URL_GIANTBOMB = "https://www.giantbomb.com/feeds/reviews/";
-    private static final String RSS_FEED_URL_METACRITIC = "https://www.metacritic.com/rss/features";
-    private static final String RSS_FEED_URL_GAMESPOT = "https://www.gamespot.com/feeds/news/";
+    private static final String RSS_FEED_URL_GAMASUTRA = "http://feeds.feedburner.com/GamasutraNews";
     private static final String RSS_FEED_URL_GAMEINFORMER = "https://www.gameinformer.com/rss.xml";
+    private static final String RSS_FEED_URL_GAMESPOT = "https://www.gamespot.com/feeds/news/";
+    private static final String RSS_FEED_URL_GIANTBOMB = "https://www.giantbomb.com/feeds/reviews/";
     private static final String RSS_FEED_URL_IGN = "http://feeds.ign.com/ign/all";
+    private static final String RSS_FEED_URL_KOTAKU = "https://kotaku.com/tag/kotakucore/rss";
+    private static final String RSS_FEED_URL_METACRITIC = "https://www.metacritic.com/rss/features";
+    private static final String RSS_FEED_URL_METRO_CO_UK = "https://metro.co.uk/entertainment/gaming/feed/";
     private static final String RSS_FEED_URL_POLYGON = "https://www.polygon.com/rss/stream/3550099";
-    private static final String RSS_FEED_URL_VG247 = "https://www.vg247.com/feed/";
     private static final String RSS_FEED_URL_ROCKPAPERSHOTGUN = "http://feeds.feedburner.com/RockPaperShotgun";
+    private static final String RSS_FEED_URL_VG247 = "https://www.vg247.com/feed/";
+    private static final String RSS_FEED_URL_VIDEOGAMER = "https://www.videogamer.com/rss/allupdates.xml";
 
     private final ArrayList<RssSource> m_rssSourceList = new ArrayList<>();
 
     public RssFeedManager() {
-        m_rssSourceList.add(new RssSource(KEY_DESTRUCTOID, RSS_FEED_URL_DESTRUCTOID, "entry", "title", "link", "updated"));
-//        m_rssSourceList.add(new RssSource(KEY_ESCAPIST, RSS_FEED_URL_ESCAPIST, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_GAMASUTRA, RSS_FEED_URL_GAMASUTRA, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_GAMEINFORMER, RSS_FEED_URL_GAMEINFORMER, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_GAMESPOT, RSS_FEED_URL_GAMESPOT, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_GIANTBOMB, RSS_FEED_URL_GIANTBOMB, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_IGN, RSS_FEED_URL_IGN, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_KOTAKU, RSS_FEED_URL_KOTAKU, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_METACRITIC, RSS_FEED_URL_METACRITIC, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_METRO_CO_UK, RSS_FEED_URL_METRO_CO_UK, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_POLYGON, RSS_FEED_URL_POLYGON, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_ROCKPAPERSHOTGUN, RSS_FEED_URL_ROCKPAPERSHOTGUN, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_VG247, RSS_FEED_URL_VG247, "item"));
-//        m_rssSourceList.add(new RssSource(KEY_VIDEOGAMER, RSS_FEED_URL_VIDEOGAMER, "item"));
+        m_rssSourceList.add(new RssSource(KEY_DESTRUCTOID, RSS_FEED_URL_DESTRUCTOID, "entry", "title", "link", true, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_ESCAPIST, RSS_FEED_URL_ESCAPIST, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_GAMASUTRA, RSS_FEED_URL_GAMASUTRA, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_GAMEINFORMER, RSS_FEED_URL_GAMEINFORMER, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_GAMESPOT, RSS_FEED_URL_GAMESPOT, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_GIANTBOMB, RSS_FEED_URL_GIANTBOMB, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_IGN, RSS_FEED_URL_IGN, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_KOTAKU, RSS_FEED_URL_KOTAKU, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_METACRITIC, RSS_FEED_URL_METACRITIC, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_METRO_CO_UK, RSS_FEED_URL_METRO_CO_UK, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_POLYGON, RSS_FEED_URL_POLYGON, "entry", "title", "link", true, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_ROCKPAPERSHOTGUN, RSS_FEED_URL_ROCKPAPERSHOTGUN, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_VG247, RSS_FEED_URL_VG247, "item", "title", "link", false, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_VIDEOGAMER, RSS_FEED_URL_VIDEOGAMER, "entry", "title", "link", true, "updated"));
     }
 
     /**
