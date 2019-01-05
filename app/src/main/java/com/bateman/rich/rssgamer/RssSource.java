@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
  * Represents a single RSS Feed.  Has a friendly Key so a user can easily disable or enable this feed.
  */
 public class RssSource {
+    private final int m_id;
+    private boolean m_isEnabled;
     private final String m_friendlyKey;
     private final String m_url;
     private final String m_xmlTagMainItem;
@@ -18,9 +20,11 @@ public class RssSource {
 
     private String m_rssFeedXml;
 
-    public RssSource(String userFriendlyKey, String url, String xmlTagMainItem,
+    public RssSource(int id, String userFriendlyKey, String url, String xmlTagMainItem,
                      String xmlTagTitle, String xmlTagLink, boolean linkIsInAttribute, String xmlTagDate,
                      String dateFormatString) {
+        m_id = id;
+        m_isEnabled = true;
         m_friendlyKey = userFriendlyKey;
         m_url = url;
         m_xmlTagMainItem = xmlTagMainItem;
@@ -70,5 +74,22 @@ public class RssSource {
 
     public SimpleDateFormat getDateFormatter() {
         return m_dateFormatter;
+    }
+
+    /**
+     * Returns the id assigned to this RSS Source.
+     * In this app, we use the id in the main menu to identify what was checked.
+     * @return
+     */
+    public int getId() {
+        return m_id;
+    }
+
+    public boolean isEnabled() {
+        return m_isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        m_isEnabled = enabled;
     }
 }

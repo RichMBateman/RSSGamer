@@ -14,12 +14,13 @@ import java.util.ArrayList;
 /**
  * Generic Information:
  *  1) The information passed IN will be of type ArrayList<RssSource>
- *  2) Second type is related to progress bars
+ *  2) Second type is related to publishing progress.  It is the type of parameter for progress published.
  *  3) The final type is the type of the result, our RSS data.
  */
-public class AsyncTaskRssDownload extends AsyncTask<ArrayList<RssSource>, Void, ArrayList<RssSource>> {
+public class AsyncTaskRssDownload extends AsyncTask<ArrayList<RssSource>, Integer, ArrayList<RssSource>> {
 
     interface AsyncDownloadComplete {
+        void onRssDownloadProgress(int progress);
         void onRssDownloadComplete(ArrayList<RssSource> rssSources);
     }
 
@@ -38,6 +39,8 @@ public class AsyncTaskRssDownload extends AsyncTask<ArrayList<RssSource>, Void, 
     @Override
     protected ArrayList<RssSource> doInBackground(ArrayList<RssSource>... rssSources) {
         Log.d(TAG, "doInBackground: start");
+        Log.d(TAG, "doInBackground: there are " + rssSources[0].size() + " rss feed(s) to download asynchronously.");
+        int progress = 0;
         for(RssSource rssSource : rssSources[0]) {
 
             String url = rssSource.getUrl();
@@ -48,6 +51,8 @@ public class AsyncTaskRssDownload extends AsyncTask<ArrayList<RssSource>, Void, 
             } else {
                 rssSource.setRssFeedXml(rssFeed);
             }
+            progress++;
+            publishProgress(progress);
         }
         return rssSources[0];
     }
@@ -59,6 +64,12 @@ public class AsyncTaskRssDownload extends AsyncTask<ArrayList<RssSource>, Void, 
     protected void onPostExecute(ArrayList<RssSource> rssSources) {
         super.onPostExecute(rssSources);
         m_asyncDownloadCompleteCb.onRssDownloadComplete(rssSources);
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+        m_asyncDownloadCompleteCb.onRssDownloadProgress(values[0]);
     }
 
     /**

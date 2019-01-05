@@ -2,9 +2,7 @@ package com.bateman.rich.rssgamer;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +43,21 @@ public class RssArticleRecyclerViewAdapter extends RecyclerView.Adapter<RssArtic
     public void addRssEntries(ArrayList<RssEntry> newEntries) {
         m_entryList.addAll(newEntries);
         Collections.sort(m_entryList);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Removes all entries from a given rss source.
+     * @param key
+     */
+    public void purgeEntriesFromSource(String key) {
+        ArrayList<RssEntry> entriesToDelete = new ArrayList<>();
+        for(RssEntry entry : m_entryList) {
+            if(entry.getRssSource().getFriendlyKey().equalsIgnoreCase(key)) {
+                entriesToDelete.add(entry);
+            }
+        }
+        m_entryList.removeAll(entriesToDelete);
         notifyDataSetChanged();
     }
 

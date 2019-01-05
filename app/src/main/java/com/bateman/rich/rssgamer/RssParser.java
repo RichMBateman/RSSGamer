@@ -1,12 +1,9 @@
 package com.bateman.rich.rssgamer;
 
-import android.util.Log;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.StringReader;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +45,7 @@ public class RssParser {
                         if(tagMainItem.equalsIgnoreCase(tagName)) {
                             inEntry = true;
                             currentRecord = new RssEntry();
+                            currentRecord.setRssSource(rssSource);
                         } else if(tagLink.equalsIgnoreCase(tagName) && rssSource.isLinkIsInAttribute()) {
                             if(inEntry) {
                                 // Parameters: Namespace, Name

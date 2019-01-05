@@ -9,10 +9,19 @@ import java.util.Date;
 public class RssEntry implements Comparable<RssEntry> {
     private static final SimpleDateFormat m_dateDisplayFormatter = new SimpleDateFormat("yyyy.MM.dd hh:mm a");
 
+    private RssSource m_rssSource;
     private String m_title;
     private String m_link;
     private String m_imgSrc;
     private Date m_date;
+
+    public RssSource getRssSource() {
+        return m_rssSource;
+    }
+
+    public void setRssSource(RssSource rssSource) {
+        m_rssSource = rssSource;
+    }
 
     public String getTitle() {
         return m_title;
