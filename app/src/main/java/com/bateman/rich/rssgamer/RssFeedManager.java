@@ -39,20 +39,20 @@ public class RssFeedManager {
     private final ArrayList<RssSource> m_rssSourceList = new ArrayList<>();
 
     public RssFeedManager() {
-        m_rssSourceList.add(new RssSource(KEY_DESTRUCTOID, RSS_FEED_URL_DESTRUCTOID, "entry", "title", "link", true, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_ESCAPIST, RSS_FEED_URL_ESCAPIST, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_GAMASUTRA, RSS_FEED_URL_GAMASUTRA, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_GAMEINFORMER, RSS_FEED_URL_GAMEINFORMER, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_GAMESPOT, RSS_FEED_URL_GAMESPOT, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_GIANTBOMB, RSS_FEED_URL_GIANTBOMB, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_IGN, RSS_FEED_URL_IGN, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_KOTAKU, RSS_FEED_URL_KOTAKU, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_METACRITIC, RSS_FEED_URL_METACRITIC, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_METRO_CO_UK, RSS_FEED_URL_METRO_CO_UK, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_POLYGON, RSS_FEED_URL_POLYGON, "entry", "title", "link", true, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_ROCKPAPERSHOTGUN, RSS_FEED_URL_ROCKPAPERSHOTGUN, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_VG247, RSS_FEED_URL_VG247, "item", "title", "link", false, "updated"));
-        m_rssSourceList.add(new RssSource(KEY_VIDEOGAMER, RSS_FEED_URL_VIDEOGAMER, "entry", "title", "link", true, "updated"));
+        m_rssSourceList.add(new RssSource(KEY_DESTRUCTOID, RSS_FEED_URL_DESTRUCTOID, "entry", "title", "link", true, "updated", "yyyy-MM-dd'T'HH:mm:ssZ"));
+        m_rssSourceList.add(new RssSource(KEY_ESCAPIST, RSS_FEED_URL_ESCAPIST, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss z"));
+        m_rssSourceList.add(new RssSource(KEY_GAMASUTRA, RSS_FEED_URL_GAMASUTRA, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_GAMEINFORMER, RSS_FEED_URL_GAMEINFORMER, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_GAMESPOT, RSS_FEED_URL_GAMESPOT, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_GIANTBOMB, RSS_FEED_URL_GIANTBOMB, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_IGN, RSS_FEED_URL_IGN, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_KOTAKU, RSS_FEED_URL_KOTAKU, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_METACRITIC, RSS_FEED_URL_METACRITIC, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_METRO_CO_UK, RSS_FEED_URL_METRO_CO_UK, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_POLYGON, RSS_FEED_URL_POLYGON, "entry", "title", "link", true, "updated", "yyyy-MM-dd'T'HH:mm:ssZ"));
+        m_rssSourceList.add(new RssSource(KEY_ROCKPAPERSHOTGUN, RSS_FEED_URL_ROCKPAPERSHOTGUN, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_VG247, RSS_FEED_URL_VG247, "item", "title", "link", false, "pubDate", "EEE, dd MMM yyyy hh:mm:ss Z"));
+        m_rssSourceList.add(new RssSource(KEY_VIDEOGAMER, RSS_FEED_URL_VIDEOGAMER, "entry", "title", "link", true, "updated", "yyyy-MM-dd'T'HH:mm:ssZ"));
     }
 
     /**

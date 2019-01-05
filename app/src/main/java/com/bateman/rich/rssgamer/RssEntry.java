@@ -1,11 +1,14 @@
 package com.bateman.rich.rssgamer;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * A simple representation of an RSS Entry.
  */
-public class RssEntry {
+public class RssEntry implements Comparable<RssEntry> {
+    private static final SimpleDateFormat m_dateDisplayFormatter = new SimpleDateFormat("yyyy.MM.dd hh:mm a");
+
     private String m_title;
     private String m_link;
     private String m_imgSrc;
@@ -41,5 +44,24 @@ public class RssEntry {
 
     public void setDate(Date date) {
         m_date = date;
+    }
+
+    /**
+     * Gets a formatted string representing the last time this article was updated.
+     * @return
+     */
+    public String getFormattedLastUpdatedDate() {
+        String formattedDate = "";
+        if(m_date != null) {
+            formattedDate = m_dateDisplayFormatter.format(m_date);
+        }
+        return formattedDate;
+    }
+
+    @Override
+    public int compareTo(RssEntry rssEntry) {
+        if(m_date == null) return  1;
+        if(rssEntry.getDate() == null) return -1;
+        return -1 * m_date.compareTo(rssEntry.getDate());
     }
 }

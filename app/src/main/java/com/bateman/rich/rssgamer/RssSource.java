@@ -1,5 +1,7 @@
 package com.bateman.rich.rssgamer;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Represents a single RSS Feed.  Has a friendly Key so a user can easily disable or enable this feed.
  */
@@ -11,11 +13,14 @@ public class RssSource {
     private final boolean m_linkIsInAttribute;
     private final String m_xmlTagLink;
     private final String m_xmlTagDate;
+    private final String m_dateFormatString;
+    private final SimpleDateFormat m_dateFormatter;
 
     private String m_rssFeedXml;
 
     public RssSource(String userFriendlyKey, String url, String xmlTagMainItem,
-                     String xmlTagTitle, String xmlTagLink, boolean linkIsInAttribute, String xmlTagDate) {
+                     String xmlTagTitle, String xmlTagLink, boolean linkIsInAttribute, String xmlTagDate,
+                     String dateFormatString) {
         m_friendlyKey = userFriendlyKey;
         m_url = url;
         m_xmlTagMainItem = xmlTagMainItem;
@@ -23,6 +28,8 @@ public class RssSource {
         m_xmlTagLink = xmlTagLink;
         m_linkIsInAttribute = linkIsInAttribute;
         m_xmlTagDate = xmlTagDate;
+        m_dateFormatString = dateFormatString;
+        m_dateFormatter = new SimpleDateFormat(m_dateFormatString);
     }
 
     public String getFriendlyKey() {
@@ -59,5 +66,9 @@ public class RssSource {
 
     public boolean isLinkIsInAttribute() {
         return m_linkIsInAttribute;
+    }
+
+    public SimpleDateFormat getDateFormatter() {
+        return m_dateFormatter;
     }
 }

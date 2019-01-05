@@ -29,13 +29,23 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskRssDownl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: start");
         super.onCreate(savedInstanceState);
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable ex) {
+                Log.e(TAG, "uncaughtException: " + ex.getMessage() );
+            }
+        });
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setupRecyclerView();
         downloadRssData();
+        Log.d(TAG, "onCreate: end");
     }
 
     @Override
