@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bateman.rich.rmblibrary.gui.AboutAppDialog;
 import com.bateman.rich.rmblibrary.persistence.SharedAppData;
 
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskRssDownl
 
     private ProgressBar m_progressBar;
     private TextView m_progressTextView;
+
+    // Menu
+    private static final int MENU_ID_ABOUT = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskRssDownl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, MENU_ID_ABOUT, Menu.NONE, "About");
+
         m_sharedAppData.load(getApplicationContext());
 
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,25 +123,38 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskRssDownl
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int menuId = item.getItemId();
-        boolean isChecked = item.isChecked();
-        isChecked = !isChecked;
-        item.setChecked(isChecked);
-
-        String key = m_rssFeedManager.getKeyFromId(menuId);
-        m_sharedAppData.load(getApplicationContext());
-        m_sharedAppData.putBoolean(key, isChecked);
-
-        RssSource rssSource = m_rssFeedManager.getRssSourceList().get(menuId - 1);
-        rssSource.setEnabled(isChecked);
-
-        if(isChecked) {
-            // redownload from the feed.
-            downloadRssData(rssSource);
+        if(menuId == MENU_ID_ABOUT) {
+            handleMenuShowAboutDialog();
         } else {
-            m_rssAdapter.purgeEntriesFromSource(key);
+            boolean isChecked = item.isChecked();
+            isChecked = !isChecked;
+            item.setChecked(isChecked);
+
+            String key = m_rssFeedManager.getKeyFromId(menuId);
+            m_sharedAppData.load(getApplicationContext());
+            m_sharedAppData.putBoolean(key, isChecked);
+
+            RssSource rssSource = m_rssFeedManager.getRssSourceList().get(menuId - 1);
+            rssSource.setEnabled(isChecked);
+
+            if(isChecked) {
+                // redownload from the feed.
+                downloadRssData(rssSource);
+            } else {
+                m_rssAdapter.purgeEntriesFromSource(key);
+            }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void handleMenuShowAboutDialog() {
+        AboutAppDialog aboutDialog = new AboutAppDialog(this);
+        aboutDialog.setIconId(R.mipmap.ic_launcher)
+                .setTitleId(R.string.app_name)
+                .setVersionName(BuildConfig.VERSION_NAME)
+                .setCopyrightYear(2019)
+                .show();
     }
 
     private void setupRecyclerView() {
